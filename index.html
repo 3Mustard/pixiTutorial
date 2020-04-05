@@ -36,6 +36,18 @@
 
         //Create the cat sprite
         let cat = new Sprite(resources["images/cat.png"].texture);
+        //Change the sprite's position
+        cat.x = 96;
+        cat.y = 96;
+
+        //Change the sprite's size
+        cat.width = 80;
+        cat.height = 120;
+
+        //Rotate sprite
+        cat.anchor.x = 0.5; //set point of rotation to middle of sprite. Default is top left.
+        cat.anchor.y = 0.5; //can also set center with cat.pivot.set(32, 32)git
+        cat.rotation = 0.5;
 
         //Add the cat to the stage
         app.stage.addChild(cat);
