@@ -9,6 +9,7 @@
 <script type="text/javascript">
     //Aliases
     let Application = PIXI.Application,
+        Container = PIXI.Container,
         loader = PIXI.loader,
         resources = PIXI.loader.resources,
         Sprite = PIXI.Sprite,
@@ -17,8 +18,8 @@
 
     //Create a Pixi Application
     let app = new Application({
-            width: 550,
-            height: 350,
+            width: 512,
+            height: 512,
             antialias: true,
             transparent: false,
             resolution: 1
@@ -39,7 +40,7 @@
 
     //Define variables that might be used in more
     //than one function
-    let dungeon, explorer, treasure, treasureHunterids;
+    let dungeon, door, explorer, treasure, treasureHunterids;
 
     //This `setup` function will run when the image has loaded
     function setup() {
@@ -114,10 +115,45 @@
         treasure.y = app.stage.height / 2 - treasure.height / 2;
         app.stage.addChild(treasure);
 
+        //Make the exit door
+        door = new Sprite(treasureHunterids["door.png"]);
+        door.position.set(32, 0);
+        app.stage.addChild(door);
 
+        //Make the blobs
+        let numberOfBlobs = 6,
+            spacing = 48,
+            xOffset = 150;
+
+        //Make as many blobs as there are `numberOfBlobs`
+        for (let i = 0; i < numberOfBlobs; i++) {
+
+            //Make a blob
+            let blob = new Sprite(treasureHunterids["blob.png"]);
+
+            //Space each blob horizontally according to the `spacing` value.
+            //`xOffset` determines the point from the left of the screen
+            //at which the first blob should be added.
+            let x = spacing * i + xOffset;
+
+            //Give the blob a random y position
+            //(`randomInt` is a custom function - see below)
+            let y = randomInt(0, app.stage.height - blob.height);
+
+            //Set the blob's position
+            blob.x = x;
+            blob.y = y;
+
+            //Add the blob sprite to the stage
+            app.stage.addChild(blob);
+        }
         //**RENDER A STAGE**//
         //Render the stage
         app.renderer.render(app.stage);
+    }
+    //The `randomInt` helper function used to create blobs in setup()
+    function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 </script>
 </body>
