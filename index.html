@@ -147,6 +147,10 @@
             //Add the blob sprite to the stage
             app.stage.addChild(blob);
         }
+        //Start the game loop by adding the `gameLoop` function to
+        //Pixi's `ticker` and providing it with a `delta` argument.
+        app.ticker.add(delta => gameLoop(delta));
+
         //**RENDER A STAGE**//
         //Render the stage
         app.renderer.render(app.stage);
@@ -154,6 +158,12 @@
     //The `randomInt` helper function used to create blobs in setup()
     function randomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    //called in setup towards the end app.ticker.add(delta => gameLoop(delta)); calls this function 60 times a second.
+    function gameLoop(delta){
+        //Move the cat 1 pixel
+        explorer.x += .5 + delta;
     }
 </script>
 </body>
